@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "80225044397",
+    "firebase_url": "https://manage-trip-64dea.firebaseio.com",
+    "project_id": "manage-trip-64dea",
+    "storage_bucket": "manage-trip-64dea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80225044397:android:1c01ae6729f6b6b5",
+        "android_client_info": {
+          "package_name": "com.example.ana.managetrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80225044397-ptfm9hnae9ntqf53ooufpi2rotq3r89o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP53oc87ReG1tNMtQyeWyexemDWxwSrF0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
