@@ -53,26 +53,6 @@ public class RecyclerViewFragment extends Fragment {
     private void initImageBitmaps(){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
-//        TripEntity e;
-
-//        e = new TripEntity();
-//        e.setName("Islands");
-//        e.setImage("https://images.unsplash.com/photo-1529333241880-9558d5e5e064?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80");
-//        trips.add(e);
-//
-//        e = new TripEntity();
-//        e.setName("Islands");
-//        e.setImage("https://images.unsplash.com/photo-1529333241880-9558d5e5e064?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80");
-//        trips.add(e);
-//        e = new TripEntity();
-//        e.setName("Islands");
-//        e.setImage("https://images.unsplash.com/photo-1529333241880-9558d5e5e064?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80");
-//        trips.add(e);
-//        e = new TripEntity();
-//        e.setName("Islands");
-//        e.setImage("https://images.unsplash.com/photo-1529333241880-9558d5e5e064?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80");
-//        trips.add(e);
-
         FirebaseFirestore ff = FirebaseFirestore.getInstance();
 
         Task<QuerySnapshot> future = ff.collection("trips").get();
@@ -82,6 +62,11 @@ public class RecyclerViewFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
                 for (DocumentSnapshot document : documents) {
+                    TripEntity e = document.toObject(TripEntity.class);
+                    if (e == null) {
+                        continue;
+                    }
+                    e.setId(document.);
                     trips.add(document.toObject(TripEntity.class));
                 }
                 adapter.notifyDataSetChanged();

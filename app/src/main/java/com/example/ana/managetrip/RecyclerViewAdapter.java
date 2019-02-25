@@ -2,8 +2,11 @@ package com.example.ana.managetrip;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,10 +44,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        Glide.with(mActivity)
-                .asBitmap()
-                .load(trips.get(position).getImage())
-                .into(holder.image);
+        TripEntity e = trips.get(position);
+
+        if (e.getImage() != null) {
+            byte[] bytes = Base64.decode(e.getImage(), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            holder.image.setImageBitmap(bitmap);
+        } else {
+            holder.image.setImageDrawable(null);
+        }
         holder.imageName.setText(trips.get(position).getName());
         holder.parentLayout.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){

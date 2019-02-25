@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class TripEntity implements Serializable {
+    private String id;
     private String name;
     private String country;
     private String image;
@@ -49,5 +50,13 @@ public class TripEntity implements Serializable {
 
     public void setBookmark(boolean bookmark) {
         this.bookmark = bookmark;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

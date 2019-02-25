@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,14 +65,21 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         if (requestCode == TRIP_ADD_REQUEST_CODE && resultCode == RESULT_OK) {
             Log.d("MAIN", "Result provided");
             if (data != null && data.hasExtra("entity")) {
-                TripEntity e = (TripEntity) data.getSerializableExtra("entity");
+                final TripEntity e = (TripEntity) data.getSerializableExtra("entity");
 
-                RecyclerViewFragment rvf = (RecyclerViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                final RecyclerViewFragment rvf = (RecyclerViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 if (rvf != null) {
                     rvf.trips.add(e);
-                    rvf.adapter.notifyDataSetChanged();
                 }
-                FirebaseFirestore.getInstance().collection("trips").add(e);
+                FirebaseFirestore.getInstance().collection("trips").add(e).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        e.setId(documentReference.getId());
+                        if (rvf != null) {
+                            rvf.adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
             }
         } else if (requestCode == TRIP_EDIT_REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("entity")) {
@@ -79,11 +88,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 RecyclerViewFragment rvf = (RecyclerViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 if (rvf != null) {
                     int position = data.getIntExtra("position", 0);
-                    rvf.trips.remove(position);
-                    rvf.trips.add(position, e);
+                    e.setId(rvf.trips.get(position).getId());
+                    rvf.trips.set(position, e);
                     rvf.adapter.notifyDataSetChanged();
                 }
-                FirebaseFirestore.getInstance().collection("trips").add(e);
+                FirebaseFirestore.getInstance().collection("trips").document(e.getId()).set(e);
             }
         }
     }
