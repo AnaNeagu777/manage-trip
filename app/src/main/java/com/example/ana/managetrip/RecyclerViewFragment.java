@@ -62,11 +62,16 @@ public class RecyclerViewFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
                 for (DocumentSnapshot document : documents) {
-                    TripEntity e = document.toObject(TripEntity.class);
+                    TripEntity e;
+                    try {
+                        e = document.toObject(TripEntity.class);
+                    } catch (Exception ex) {
+                        continue;
+                    }
                     if (e == null) {
                         continue;
                     }
-                    e.setId(document.);
+                    e.setId(document.getId());
                     trips.add(document.toObject(TripEntity.class));
                 }
                 adapter.notifyDataSetChanged();

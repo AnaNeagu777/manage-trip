@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,13 +15,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +86,9 @@ public class ManageTripActivity extends AppCompatActivity implements DatePickerD
                 e.setName(((EditText)findViewById(R.id.editText)).getText().toString());
                 e.setRating(((RatingBar)findViewById(R.id.ratingBar)).getRating());
                 e.setCountry(((EditText)findViewById(R.id.editText3)).getText().toString());
+                e.setStartDate(((TextView)findViewById(R.id.start_date)).getText().toString());
+                e.setEndDate(((TextView)findViewById(R.id.end_date)).getText().toString());
+                e.setPrice(((SeekBar)findViewById(R.id.seekBar)).getProgress());
                 e.setImage(encodedImage);
                 Intent intent = new Intent();
                 intent.putExtra("entity", e);
@@ -101,6 +105,9 @@ public class ManageTripActivity extends AppCompatActivity implements DatePickerD
             ((EditText)findViewById(R.id.editText)).setText(e.getName());
             ((EditText)findViewById(R.id.editText3)).setText(e.getCountry());
             ((RatingBar) findViewById(R.id.ratingBar)).setRating((float)e.getRating());
+            ((TextView)findViewById(R.id.start_date)).setText(e.getStartDate());
+            ((TextView)findViewById(R.id.end_date)).setText(e.getEndDate());
+            ((SeekBar) findViewById(R.id.seekBar)).setProgress(e.getPrice());
             encodedImage = e.getImage();
         }
     }
@@ -112,13 +119,11 @@ public class ManageTripActivity extends AppCompatActivity implements DatePickerD
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-//        if (view.getTag().equals("Start date")) {
-            TextView textView = findViewById(R.id.start_date);
-            textView.setText(currentDateString);
-//        } else {
-            TextView textView2 = findViewById(R.id.end_date);
-            textView2.setText(currentDateString);
-//        }
+        TextView textView = findViewById(R.id.start_date);
+        textView.setText(currentDateString);
+
+        TextView textView2 = findViewById(R.id.end_date);
+        textView2.setText(currentDateString);
     }
 
     private void openCamera() {

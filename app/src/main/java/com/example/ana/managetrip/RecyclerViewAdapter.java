@@ -64,6 +64,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
                 mActivity.startActivityForResult(intent, TRIP_EDIT_REQUEST_CODE);
             }
         });
+        holder.countyView.setText(e.getCountry());
+        holder.ratingView.setText(String.format("%.1f", e.getRating()) + " / 5.0");
     }
 
     @Override

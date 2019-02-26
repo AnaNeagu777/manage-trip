@@ -11,6 +11,10 @@ public class TripEntity implements Serializable {
     private String image;
     private double rating;
     private boolean bookmark;
+    private String startDate;
+    private String endDate;
+    private int price;
+    private String tripType;
 
     public String getName() {
         return name;
@@ -58,5 +62,37 @@ public class TripEntity implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getTripType() {
+        return tripType;
+    }
+
+    public void setTripType(String tripType) {
+        this.tripType = tripType;
     }
 }
